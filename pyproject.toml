@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "pythonproject2"
+version = "0.1.0"
+description = "Cursov"
+authors = ["oksanafedorova07 <kcenka4@gmail.com>"]
+license = "MID"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
