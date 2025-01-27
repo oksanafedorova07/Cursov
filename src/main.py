@@ -9,7 +9,9 @@ transactions = get_data_from_excel("./data/operations.xlsx")
 transactions_df = pd.read_excel("../data/operations.xlsx")
 
 
-def main(user_date: str, operations: list, operations_df: pd.DataFrame, user_category: str) -> None:
+def main(
+    user_date: str, operations: list, operations_df: pd.DataFrame, user_category: str
+) -> None:
     """Вызывает результаты всех реализованных функций"""
     print(web_main(user_date))
     print(transactions_by_phone_numbers(operations))

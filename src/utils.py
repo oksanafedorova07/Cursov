@@ -17,7 +17,9 @@ abs_file_path = os.path.abspath(rel_file_path)
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(abs_file_path, "w", encoding="utf-8")
-file_formatter = logging.Formatter("%(asctime)s - %(funcName)s %(levelname)s: %(message)s")
+file_formatter = logging.Formatter(
+    "%(asctime)s - %(funcName)s %(levelname)s: %(message)s"
+)
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
@@ -49,8 +51,12 @@ def get_data_from_excel(path_to_the_file: str) -> pd.DataFrame | list:
 
 def filter_date_operations(operations: pd.DataFrame, date: str) -> list:
     """Возвращает операции за текущий месяц"""
-    first_day_moth = datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(day=1, hour=00, minute=00, second=00)
-    operations["Дата операции"] = pd.to_datetime(operations["Дата операции"], format="%d.%m.%Y %H:%M:%S")
+    first_day_moth = datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(
+        day=1, hour=00, minute=00, second=00
+    )
+    operations["Дата операции"] = pd.to_datetime(
+        operations["Дата операции"], format="%d.%m.%Y %H:%M:%S"
+    )
     return operations[
         (operations["Дата операции"] >= first_day_moth)
         & (operations["Дата операции"] <= datetime.strptime(date, "%Y-%m-%d %H:%M:%S"))
@@ -73,10 +79,20 @@ def greeting_user() -> str:
 
 def operations_cards(operations: pd.DataFrame) -> list:
     """Возвращает данные по каждой карте"""
-    grouped_operations = operations.groupby("Номер карты")["Сумма операции с округлением"].sum().reset_index()
-    grouped_operations["Cashback"] = (grouped_operations["Сумма операции с округлением"] // 100).astype(int)
-    grouped_operations["LastFourDigits"] = grouped_operations["Номер карты"].astype(str).str[-4:]
-    result = grouped_operations[["LastFourDigits", "Сумма операции с округлением", "Cashback"]]
+    grouped_operations = (
+        operations.groupby("Номер карты")["Сумма операции с округлением"]
+        .sum()
+        .reset_index()
+    )
+    grouped_operations["Cashback"] = (
+        grouped_operations["Сумма операции с округлением"] // 100
+    ).astype(int)
+    grouped_operations["LastFourDigits"] = (
+        grouped_operations["Номер карты"].astype(str).str[-4:]
+    )
+    result = grouped_operations[
+        ["LastFourDigits", "Сумма операции с округлением", "Cashback"]
+    ]
     result.columns = ["last_digits", "total_spent", "cashback"]
 
     return result.to_dict(orient="records")
@@ -103,7 +119,9 @@ import requests  # noqa
 
 def currency_rates():
     # Пример запроса к API (замени на свой реальный URL)
-    response = requests.get(f"https://api.currencyapi.com/v3/latest?apikey={for_currency}")
+    response = requests.get(
+        f"https://api.currencyapi.com/v3/latest?apikey={for_currency}"
+    )
 
     # Проверка, что статус ответа 200 (OK)
     if response.status_code != 200:
@@ -117,11 +135,15 @@ def currency_rates():
         print(data)
 
         # Используем .get() для безопасного доступа к 'data'
-        currencies = data.get("data", {})  # Возвращаем пустой словарь, если ключ 'data' отсутствует
+        currencies = data.get(
+            "data", {}
+        )  # Возвращаем пустой словарь, если ключ 'data' отсутствует
         result_currencies = []
 
         for currency, value in currencies.items():
-            result_currencies.append({"currency": currency, "rate": round(value["value"], 2)})
+            result_currencies.append(
+                {"currency": currency, "rate": round(value["value"], 2)}
+            )
 
         return result_currencies
 

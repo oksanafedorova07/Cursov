@@ -11,7 +11,9 @@ abs_file_path = os.path.abspath(rel_file_path)
 logger = logging.getLogger("services")
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(abs_file_path, "w", encoding="utf-8")
-file_formatter = logging.Formatter("%(asctime)s - %(funcName)s %(levelname)s: %(message)s")
+file_formatter = logging.Formatter(
+    "%(asctime)s - %(funcName)s %(levelname)s: %(message)s"
+)
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
