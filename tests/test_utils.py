@@ -5,9 +5,14 @@ from unittest.mock import mock_open, patch
 import pandas as pd
 import pytest
 
-from src.utils import (filter_date_operations, get_data_from_excel,
-                       greeting_user, operations_cards, stock_prices,
-                       top_five_transactions)
+from src.utils import (
+    filter_date_operations,
+    get_data_from_excel,
+    greeting_user,
+    operations_cards,
+    stock_prices,
+    top_five_transactions,
+)
 
 
 @patch("builtins.open", new_callable=mock_open, read_data=b"\x3c\x80\x00\x00\x00")

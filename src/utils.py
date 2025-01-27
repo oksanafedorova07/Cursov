@@ -5,6 +5,7 @@ from datetime import datetime
 
 import pandas as pd
 from dotenv import load_dotenv
+import requests
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 file_json = os.path.join(project_root, "user_settings.json")
@@ -113,8 +114,6 @@ def top_five_transactions(operations: pd.DataFrame) -> list:
         )
     return result
 
-
-import requests  # noqa
 
 
 def currency_rates():
